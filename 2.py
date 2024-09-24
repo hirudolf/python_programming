@@ -1,25 +1,65 @@
 import numpy as np
+import random
+import nnfs
+from nnfs.datasets import spiral_data
+import matplotlib.pyplot as plt
+nnfs.init()
 
-inputs = [[1.0,2.0,3.0,2.5,],
-          [2.0,5.0,-1.0,2.0],
-          [-1.5,2.7,3.3,-0.8],
-          [0.5,3.0,1.0,3.5,],
-          [2.0,1.0,2.0,2.5,]
-          ]
+class Activation_Step:
+    def forward(self, inputs):
+        return (inputs > 0).astype(float)
 
-weights = [[0.2,0.8,-0.5,1],
-           [0.5,-0.91,0.26,-0.5],
-           [-0.26,-0.27,0.17,0.87]
-           ]
-weights2 = [[0.5,0.9,0.5],
-           [0.2,-0.71,0.46],
-           [-0.28,-0.17,0.67],
-           ]
-biases = [2.0,3.0,0.5]
-biases2 = [1.0,2.0,1.5]
+class Activation_Relu:
+    def forward(self, inputs):
+        return np.maximum(0, inputs)
 
-layers_outputs = np.dot(inputs,np.array(weights).T)+biases
-print(layers_outputs)
-layers_outputs2 = np.dot(layers_outputs,np.array(weights2))+biases2
-print(layers_outputs2)
+class Activation_Linear:
+    def forward(self, inputs):
+        return inputs
 
+class Activation_Sigmoid:
+    def forward(self, inputs):
+        return 1 / (1 + np.exp(-inputs))
+
+class Layer_Dense:
+    def __init__(self,n_inputs,n_neurons):
+        self.weights = np.random.uniform(0, 1, (n_inputs, n_neurons))
+        self.biases = np.zeros((1, n_neurons))
+
+    def forward(self, inputs):
+        self.outputs = np.dot(inputs, self.weights) + self.biases
+        return self.outputs
+
+
+
+X = np.linspace(0, 2*np.pi, 100).reshape(-1,1)
+y = np.sin(X)
+
+dense1 = Layer_Dense (1,8)
+dense2 = Layer_Dense (8,8)
+dense3 = Layer_Dense (8,1)
+
+activation1 = Activation_Step()
+activation2 = Activation_Relu()
+activation3 = Activation_Sigmoid()
+
+dense1.biases = np.random.randn(1,1)*0.1
+dense2.biases = np.random.randn(1,1)*0.2
+dense3.biases = np.random.randn(1,1)*0.3
+
+dense1.forward(X)
+step_output = activation1.forward(dense1.outputs)
+dense2.forward(step_output)
+RELU_output = activation2.forward(dense2.outputs)
+outputs = dense3.forward(RELU_output)
+sigmoid_output = activation3.forward(outputs)
+
+print(RELU_output)
+print(step_output)
+print(sigmoid_output)
+
+plt.plot(X, y, label="True Sine Wave",color="blue")
+plt.plot(X,sigmoid_output, label="NN Output",color="red")
+plt.legend()
+plt.title("Sine Wave Approximation using Neural Network")
+plt.show()
