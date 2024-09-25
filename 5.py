@@ -19,7 +19,7 @@ class Layer_Dense:
 # Activation ReLu Class
 class Activation_Relu:
     def forward(self, inputs):
-        return np.maximum(0, inputs)
+        self.output = np.maximum(0, inputs)
 
 
 # Activation Softmax Class
@@ -31,41 +31,46 @@ class Activation_Softmax:
         return probabilities
 
 
-## Loss_CategoricalCrossentropy
-class Cross_entroy:
-    def forward(predictions, targets):
+# Loss_CategoricalCrossentropy Class
+class Cross_entropy:
+    def forward(self, predictions, targets):
         '''
         :param predictions: dense layer output => softmax 취한 출력
-        :param targets: 정답지 one-hot encording
+        :param targets: 정답지 one-hot encoding 또는 인덱스
         :return: categorical cross entropy loss 연산값
         '''
         predictions = np.clip(predictions, 1e-7, 1 - 1e-7)
-        ## clip : 범위를 정해줌 // e = 10, e-7 = 10^-7
         if targets.ndim == 1:
             correct_confidences = predictions[np.arange(len(predictions)), targets]
         else:
             correct_confidences = np.sum(predictions * targets, axis=1)
 
-        negative_log_likelhoods = -np.log(correct_confidences)
-        return np.mean(negative_log_likelhoods)
+        negative_log_likelihoods = -np.log(correct_confidences)
+        return np.mean(negative_log_likelihoods)
 
 
-# Create dataset
+# 데이터셋 생성
 X, y = spiral_data(samples=100, classes=3)
 
 ## forward
+dense1 = Layer_Dense(2, 8)
+dense2 = Layer_Dense(8, 8)
+dense3 = Layer_Dense(8, 3)
 
-layer = Layer_Dense(2, 3)
-
-activation_relu = Activation_Relu()
+activation1 = Activation_Relu()
+activation2 = Activation_Relu()
 activation_softmax = Activation_Softmax()
 
-layer.forward(X)
-activation_relu.forward(layer.output)
-activation_softmax.forward(activation_relu.output)
+dense1.forward(X)
+activation1.forward(dense1.outputs)
+dense2.forward(activation1.output)
+activation2.forward(dense2.outputs)
+dense3.forward(activation2.output)
+activation_softmax.forward(dense3.outputs)
 
 # loss calculation
-loss = Layer_Dense.Cross_entropy(activation_softmax.output, y)
+loss_function = Cross_entropy()
+loss = loss_function.forward(activation_softmax.output, y)
 
 # print loss
 print("Categorical Cross-Entropy Loss:", loss)
