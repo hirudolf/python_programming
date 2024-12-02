@@ -1,0 +1,43 @@
+optimizer = Optimizer_SGD(0.1, 5e-7,0.6)
+epoch: 9900,loss: 1.025,acc: 0.433,lr: 0.09950748768967993,
+optimizer = Optimizer_SGD(0.1, 5e-7,0.1)
+epoch: 9900,loss: 1.025,acc: 0.433,lr: 0.09950748768967993,
+optimizer = Optimizer_SGD(0.1, 1e-7,0.1)
+epoch: 9900,loss: 1.025,acc: 0.433,lr: 0.09990110789329643,
+optimizer = Optimizer_SGD(0.5, 1e-7,0.1)
+epoch: 9900,loss: 0.961,acc: 0.577,lr: 0.49950553946648213,
+optimizer = Optimizer_SGD(3., 1e-7,0.6)
+epoch: 9900,loss: 0.415,acc: 0.777,lr: 2.9970332367988926,   ★
+
+optimizer = Optimizer_RMSprop(0.1, 5e-7)
+epoch: 9900,loss: 0.762,acc: 0.627,lr: 0.09950748768967993,
+optimizer = Optimizer_RMSprop(0.1, 5e-7,0.1)
+epoch: 9900,loss: 0.533,acc: 0.770,lr: 0.09950748768967993,
+optimizer = Optimizer_RMSprop(0.5, 5e-7,0.1)
+epoch: 9900,loss: 0.332,acc: 0.813,lr: 0.49753743844839965,
+optimizer = Optimizer_RMSprop(0.6, 5e-7,0.1)
+epoch: 9900,loss: 0.362,acc: 0.800,lr: 0.5970449261380796,
+optimizer = Optimizer_RMSprop(0.5, 5e-7,0.1,0.2)
+epoch: 9900,loss: 0.352,acc: 0.820,lr: 0.49753743844839965, ★
+
+optimizer = Optimizer_Adagrad(0.1, 5e-7,0.6)
+epoch: 9900,loss: 0.870,acc: 0.587,lr: 0.09950748768967993,
+optimizer = Optimizer_Adagrad(0.3, 5e-7,0.6)
+epoch: 9900,loss: 0.620,acc: 0.777,lr: 0.2985224630690398,
+optimizer = Optimizer_Adagrad(0.5, 5e-7,0.6)
+epoch: 9900,loss: 0.574,acc: 0.790,lr: 0.49753743844839965, ★
+optimizer = Optimizer_Adagrad(0.5, 1e-7,0.6)
+epoch: 9900,loss: 0.589,acc: 0.760,lr: 0.49950553946648213,
+optimizer = Optimizer_Adagrad(0.5, 5e-7,0.8)
+epoch: 9900,loss: 0.628,acc: 0.770,lr: 0.49753743844839965,
+
+
+optimizer = Optimizer_Adam(0.1, 5e-7, 0.6)
+epoch: 9900,loss: nan,acc: 0.333,lr: 0.09950748768967993,
+optimizer = Optimizer_Adam(0.1, 5e-7, 0.6,0.6,0.6)
+epoch: 9900,loss: nan,acc: 0.333,lr: 0.09950748768967993,
+optimizer = Optimizer_Adam(0.1, 5e-7, 0.6,0.1,0.1)
+epoch: 9900,loss: nan,acc: 0.333,lr: 0.09950748768967993,
+...??
+
+
